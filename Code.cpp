@@ -32,7 +32,7 @@ int SolveSquare(double a, double b, double c, double * p1, double * p2)
 			solves = SolveLinear(b, c, p1, solves);
 		}
 	}
-	else if(b == 0) // Is "else" needed here?
+	else if(b == 0)
 	{
 		if(a != 0 && c != 0)
 		{
@@ -46,7 +46,7 @@ int SolveSquare(double a, double b, double c, double * p1, double * p2)
 			solves = 1;
 		}
 	}
-	else if(c == 0) // Is "else" needed here?
+	else if(c == 0)
 	{
 		if(a != 0 && b != 0)
 		{
@@ -87,15 +87,11 @@ int SolveLinear(double b, double c, double * p1, int solves)
 
 void Input(double * a, double * b, double * c)
 {
-	int retValue = 0;
-	retValue = scanf("%lg %lg %lg", a ,b ,c);
-	/*do
+	while(scanf("%lg%lg%lg", a, b, c) != 3)
 	{
-		printf("before %d\n", retValue);
-		retValue = scanf("%lg %lg %lg", &a, &b, &c);
-		printf("after %d\n", retValue);
-	}*/
-	/*while(retValue != 3);*/
+		while(getchar() != '\n');
+		printf("Incorrect value\nPlease, enter numbers: ");
+	}
 }
 
 int main()
@@ -103,18 +99,12 @@ int main()
 	printf("#Calculating if a square equation\n");
 	printf("#Enter numbers:\n");
 
-	double a, b, c;															// initialization of coefficients
-	double x1, x2;															// initialization of solves
+	double a, b, c;																	// initialization of coefficients
+	double x1, x2;																	// initialization of solutions
 
-	/*if(scanf("%lg %lg %lg", &a, &b, &c) != 3)								// input of values
-	{
-		printf("Error\n");
-		//exit(0);
-	}*/
+	Input(&a, &b, &c);																// Input of coefficients
 
-	Input(&a, &b, &c);
-
-	int nSolves = SolveSquare(a, b, c, &x1, &x2);							// calculation of numbers of solves
+	int nSolves = SolveSquare(a, b, c, &x1, &x2);									// calculation of solutions
 	
 	switch(nSolves)
 	{
