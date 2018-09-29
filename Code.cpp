@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 #include <limits.h>
 #include <cfloat>
@@ -7,7 +8,8 @@
 //----------------------------------------------------------------
 
 int SolveSquare(double a, double b, double c, double * p1, double * p2);			// Calculating solutions of the equation
-int SolveLinear(double b, double c, double * p1, int solves);									// Calculating solution of the linear equation
+int SolveLinear(double b, double c, double * p1, int solves);						// Calculating solution of the linear equation
+void Input(double * a, double *b, double * c);										// Input of coefficients
 
 //----------------------------------------------------------------
 
@@ -83,6 +85,18 @@ int SolveLinear(double b, double c, double * p1, int solves)
 	return solves;
 }
 
+void Input(double * a, double * b, double * c)
+{
+	int retValue = 0;
+	retValue = scanf("%lg %lg %lg", a ,b ,c);
+	/*do
+	{
+		printf("before %d\n", retValue);
+		retValue = scanf("%lg %lg %lg", &a, &b, &c);
+		printf("after %d\n", retValue);
+	}*/
+	/*while(retValue != 3);*/
+}
 
 int main()
 {
@@ -91,7 +105,14 @@ int main()
 
 	double a, b, c;															// initialization of coefficients
 	double x1, x2;															// initialization of solves
-	scanf("%lg %lg %lg", &a, &b, &c);
+
+	/*if(scanf("%lg %lg %lg", &a, &b, &c) != 3)								// input of values
+	{
+		printf("Error\n");
+		//exit(0);
+	}*/
+
+	Input(&a, &b, &c);
 
 	int nSolves = SolveSquare(a, b, c, &x1, &x2);							// calculation of numbers of solves
 	
