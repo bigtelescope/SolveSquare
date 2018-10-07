@@ -15,9 +15,43 @@ int SolveSquare(double a, double b, double c, double * x1, double * x2);
 int SolveLinear(double b, double c, double * x1);	
 
 // Input of coefficients								
-void Input(double * a, double *b, double * c);	
+void Input(double * a, double *b, double * c);
+
+// Tests
+int UnitTests(void);	
 
 //----------------------------------------------------------------
+
+int UnitTests(void)
+{
+	int nSolves = 0;
+	double x1 = 0, x2 = 0;
+	int arr[12][4] = 
+	{
+		{1, 3, 2, 2},
+		{4, 4, 0, 2},
+		{1, 0, 0, 1},
+		{0, 0, 9, 0},
+		{0, 5, 0, 1},
+		{-1, 4, 5, 2},
+		{0, 1, -1, 1},
+		{-1, 0, 4, 2},
+		{0, -2, -13, 1},
+		{0, 89, 135, 1},
+		{-1, -4, -4, 1},
+		{0, 0, 0, SS_INF_ROOTS},
+	};
+	for(int i = 0; i < 12; i++)
+	{
+		nSolves = SolveSquare(arr[i][0], arr[i][1], arr[i][2], &x1, &x2);
+		if(nSolves != arr[i][3])
+		{
+			printf("Programm crashed on the %d line\n", i);
+			exit(3);
+		}
+	}
+	printf("\nProgramm is ready:)\n\n");
+}
 
 int SolveSquare(double a, double b, double c, double * x1, double * x2)
 {
@@ -86,6 +120,7 @@ void Input(double * a, double * b, double * c)
 
 int main()
 {
+	UnitTests();
 	printf("#Calculating if a square equation\n");
 	printf("#Enter numbers:\n");
 
