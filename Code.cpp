@@ -2,26 +2,37 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <limits.h>
-#include <cfloat>
-#include <cmath>
-#define INF 42
+#include <math.h>
+
+#define SS_INF_ROOTS -1
 
 //----------------------------------------------------------------
 
-int SolveSquare(double a, double b, double c, double * x1, double * x2);			// Calculating solutions of the equation
-int SolveLinear(double b, double c, double * x1);									// Calculating solution of the linear equation
-void Input(double * a, double *b, double * c);										// Input of coefficients
+// Calculating solutions of the equation
+int SolveSquare(double a, double b, double c, double * x1, double * x2);
+
+// Calculating solution of the linear equation			
+int SolveLinear(double b, double c, double * x1);	
+
+// Input of coefficients								
+void Input(double * a, double *b, double * c);	
 
 //----------------------------------------------------------------
 
 int SolveSquare(double a, double b, double c, double * x1, double * x2)
 {
-	assert(std::isfinite(a));
-	assert(std::isfinite(b));
-	assert(std::isfinite(c));
-	assert(x1 != x2);
-	assert(x1 != NULL);
-	assert(x2 != NULL);
+	if(!isfinite(a) || !isfinite(b) || !isfinite(c))
+	{
+		printf("Incorrect values\nProgramm crashed with code 1");
+		exit(1);
+	}
+
+	if(x1 == x2 || x1 == NULL || x2 == NULL)
+	{
+		printf("Incorrect values\nProgramm crashed with code 2");
+		exit(2);
+	}
+
 	int solves = 0;
 	if(a == 0)
 	{
@@ -50,8 +61,10 @@ int SolveSquare(double a, double b, double c, double * x1, double * x2)
 int SolveLinear(double b, double c, double * x1)
 {
 	int solves = 0; 
-	if(b == 0)
-		solves = INF;
+	if(b == 0 && c == 0)
+		solves = SS_INF_ROOTS;
+	else if(b == 0 && c != 0)
+		solves = 0;
 	else
 	{
 		*x1 = -(c / b);
@@ -90,14 +103,14 @@ int main()
 			break;
 
 		case 1:
-			printf("You have 1 solutions:\nIt's %lg\n", x1);
+			printf("You have only 1 solution:\nIt's %lg\n", x1);
 			break;
 
 		case 2:
 			printf("You have 2 solutions:\nFirst = %lg\nSecond = %lg\n", x1, x2);
 			break;
 
-		case INF:
+		case SS_INF_ROOTS:
 			printf("Endless number of solutions\nAny number is a solution\n");
 			break;
 
