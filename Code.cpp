@@ -15,7 +15,7 @@ int SolveSquare(double a, double b, double c, double * x1, double * x2);
 int SolveLinear(double b, double c, double * x1);	
 
 // Input of coefficients								
-void Input(double * a, double *b, double * c);
+int Input(double * a, double *b, double * c);
 
 // Tests
 int UnitTests(void);	
@@ -26,31 +26,50 @@ int UnitTests(void)
 {
 	int nSolves = 0;
 	double x1 = 0, x2 = 0;
-	int arr[12][4] = 
+	int arr[11][6] = 
 	{
-		{1, 3, 2, 2},
-		{4, 4, 0, 2},
-		{1, 0, 0, 1},
 		{0, 0, 9, 0},
-		{0, 5, 0, 1},
-		{-1, 4, 5, 2},
-		{0, 1, -1, 1},
-		{-1, 0, 4, 2},
-		{0, -2, -13, 1},
-		{0, 89, 135, 1},
-		{-1, -4, -4, 1},
-		{0, 0, 0, SS_INF_ROOTS},
+		{1, 0, 0, 1, 0},
+		{0, 5, 0, 1, 0},
+		{0, 1, -1, 1, 1},
+		{4, 4, 0, 2, 0, -1},
+		{-1, -4, -4, 1, -2},
+		{-1, 0, 4, 2, -2, 2},
+		{0, -2, -12, 1, -6},
+		{1, 3, 2, 2, -1, -2},
+		{-1, 4, 5, 2, -1, 5},
+		{0, 0, 0, -1},
 	};
-	for(int i = 0; i < 12; i++)
+	for(int i = 0; i < 11; i++)
 	{
 		nSolves = SolveSquare(arr[i][0], arr[i][1], arr[i][2], &x1, &x2);
 		if(nSolves != arr[i][3])
 		{
-			printf("Programm crashed on the %d line\n", i);
+			printf("Programm crashed on the %d line with error #3\n", i);
+			printf("%d %d %d %d\n", nSolves, arr[i][0], arr[i][1], arr[i][2]);
 			exit(3);
+		}
+		switch(arr[i][3])
+		{
+			case 1:
+				if(x1 != arr[i][4])
+				{
+					printf("Programm crashed on the %d line with error #4\n", i);
+					exit(4);
+				}
+				break;
+
+			case 2:
+				if(x1 != arr[i][4] || x2 != arr[i][5])
+				{
+					printf("Programm crashed on the %d line with error #5\n", i);
+					exit(5);
+				}
+				break;
 		}
 	}
 	printf("\nProgramm is ready:)\n\n");
+	return 0;
 }
 
 int SolveSquare(double a, double b, double c, double * x1, double * x2)
@@ -107,15 +126,18 @@ int SolveLinear(double b, double c, double * x1)
 	return solves;
 }
 
-void Input(double * a, double * b, double * c)
+int Input(double * a, double * b, double * c)
 {
+	int Count = 0;
 	while(scanf("%lg%lg%lg", a, b, c) != 3)
 	{
 		printf("\n");
 		while(getchar() != '\n');
 		printf("Incorrect value\nPlease, enter numbers:\n");
+		Count++;
 	}
 	printf("\n");
+	return Count;
 }
 
 int main()
@@ -126,8 +148,10 @@ int main()
 
 	double a = 0, b = 0, c = 0;														// initialization of coefficients
 	double x1 = 0, x2 = 0;															// initialization of solutions
+	int Count = 0;
 
-	Input(&a, &b, &c);																// Input of coefficients
+	Count = Input(&a, &b, &c);																// Input of coefficients
+	printf("It's was your %d attempt\n", ++Count);
 
 	int nSolves = SolveSquare(a, b, c, &x1, &x2);									// calculation of solutions
 	
