@@ -29,6 +29,7 @@ int UnitTests(void)
 	int arr[11][6] = 
 	{
 		{0, 0, 9, 0},
+		{0, 0, 0, -1},
 		{1, 0, 0, 1, 0},
 		{0, 5, 0, 1, 0},
 		{0, 1, -1, 1, 1},
@@ -38,7 +39,6 @@ int UnitTests(void)
 		{0, -2, -12, 1, -6},
 		{1, 3, 2, 2, -1, -2},
 		{-1, 4, 5, 2, -1, 5},
-		{0, 0, 0, -1},
 	};
 	for(int i = 0; i < 11; i++)
 	{
@@ -46,7 +46,6 @@ int UnitTests(void)
 		if(nSolves != arr[i][3])
 		{
 			printf("Programm crashed on the %d line with error #3\n", i);
-			printf("%d %d %d %d\n", nSolves, arr[i][0], arr[i][1], arr[i][2]);
 			exit(3);
 		}
 		switch(arr[i][3])
