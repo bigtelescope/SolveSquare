@@ -15,7 +15,7 @@ int SolveSquare(double a, double b, double c, double * x1, double * x2);
 int SolveLinear(double b, double c, double * x1);	
 
 // Input of coefficients								
-int Input(double * a, double *b, double * c);
+int GetCoeff(double * a, double *b, double * c);
 
 // Tests
 int UnitTests(void);	
@@ -93,6 +93,11 @@ int SolveSquare(double a, double b, double c, double * x1, double * x2)
 	else
 	{
 		double d = (b * b - 4 * a * c);
+		if(!isfinite(d))
+	{
+		printf("Incorrect values\nProgramm crashed with code 1");
+		exit(1);
+	}
 		if(d < 0)
 			solves = 0;
 		if(d == 0)
@@ -112,6 +117,11 @@ int SolveSquare(double a, double b, double c, double * x1, double * x2)
 
 int SolveLinear(double b, double c, double * x1)
 {
+	if(x1 == NULL)
+	{
+		printf("Incorrect values\nProgramm crashed with code 2");
+		exit(2);
+	}
 	int solves = 0; 
 	if(b == 0 && c == 0)
 		solves = SS_INF_ROOTS;
@@ -125,7 +135,7 @@ int SolveLinear(double b, double c, double * x1)
 	return solves;
 }
 
-int Input(double * a, double * b, double * c)
+int GetCoeff(double * a, double * b, double * c)
 {
 	int Count = 0;
 	while(scanf("%lg%lg%lg", a, b, c) != 3)
@@ -147,10 +157,9 @@ int main()
 
 	double a = 0, b = 0, c = 0;														// initialization of coefficients
 	double x1 = 0, x2 = 0;															// initialization of solutions
-	int Count = 0;
-
-	Count = Input(&a, &b, &c);																// Input of coefficients
-	printf("It's was your %d attempt\n", ++Count);
+	int count = GetCoeff(&a, &b, &c);																// Input of coefficients
+	
+	printf("It's was your %d attempt\n", ++count);
 
 	int nSolves = SolveSquare(a, b, c, &x1, &x2);									// calculation of solutions
 	
