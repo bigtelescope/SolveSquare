@@ -5,10 +5,14 @@
 #include <errno.h>
 #include <math.h>
 
-#define SS_INF_SOL 3//! Constant, that means infinity amount of solutions
-#define SS_TWO_SOL 2//! Constant, that means two solutions
-#define SS_ONE_SOL 1// Constant, that means one solution
-#define SS_NO_SOL 0//@brief Constant, that means that you have no solutions
+
+enum SOLUTIONS
+{
+	SS_INF_SOL = 3,//! Constant, that means infinity amount of solutions
+	SS_TWO_SOL = 2,//! Constant, that means two solutions
+	SS_ONE_SOL = 1,//! Constant, that means one solution
+	SS_NO_SOL  = 0,//! Constant, that means that you have no solutions
+};
 
 //----------------------------------------------------------------
 
@@ -185,15 +189,15 @@ int Results(double a, double b, double c, double x1, double x2, int nSolves)
 
 	switch(nSolves)
 	{
-		case 0:// NO_SOLUTIONS
+		case SS_NO_SOL:// NO_SOLUTIONS
 			printf("You have no solutions:(\n");
 			break;
 
-		case 1:
+		case SS_ONE_SOL:
 			printf("You have only 1 solution:\nIt's %lg\n", x1);
 			break;
 
-		case 2:
+		case SS_TWO_SOL:
 			printf("You have 2 solutions:\nFirst = %lg\nSecond = %lg\n", x1, x2);
 			break;
 
