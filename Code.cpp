@@ -16,6 +16,11 @@ enum SOLUTIONS
 
 //----------------------------------------------------------------
 
+/*
+	В описания обычно пихают по поводу параметров. Практически ради
+	них вся пляска :)
+ */
+
 /*!  \brief Calculating solutions of the equation
 
 	This function calculates amount of solutions with help of SolveLinear function or
@@ -99,6 +104,11 @@ int SolveSquare(double a, double b, double c, double * x1, double * x2)
 	{
 		errno = EINVAL;
 		perror("Incorrect values");
+/*
+	Здесь и где-то там подальше возвращается недокументированная -1.
+	Во-первых, есть смысел заменить ее на что-то более именованное,
+	и во-вторых, можно сказать об этом в описании просто
+ */
 		return -1;
 	}
 
@@ -118,6 +128,11 @@ int SolveSquare(double a, double b, double c, double * x1, double * x2)
 	else
 	{
 		double d = (b * b - 4 * a * c);
+
+/*
+	Сюда б проверочку, ибо e300*e300 - это оверфлоу, но ввод корректен
+ */
+
 		if(d < 0)
 			solves = SS_NO_SOL;
 		if(d == 0)
@@ -166,10 +181,23 @@ int SolveLinear(double b, double c, double * x1)
 
 int Input(double * a, double * b, double * c)
 {
+/*
+	У тебя вроде как кодстайл подразумевает локальные 
+	переменные с маленькой буквы, посему лучше его придерживаться :)
+ */
 	int Count = 0;
 	while(scanf("%lg%lg%lg", a, b, c) != 3)
 	{
 		printf("\n");
+/*
+	Сам недавно выяснил, можно лучше - не 
+	
+	while(getchar() != '\n');
+	
+	а просто
+
+	fflush(stdin);
+ */
 		while(getchar() != '\n');
 		printf("Incorrect value\nPlease, enter numbers:\n");
 		Count++;
@@ -189,7 +217,7 @@ int Results(double a, double b, double c, double x1, double x2, int nSolves)
 
 	switch(nSolves)
 	{
-		case SS_NO_SOL:// NO_SOLUTIONS
+		case SS_NO_SOL:
 			printf("You have no solutions:(\n");
 			break;
 
@@ -206,6 +234,9 @@ int Results(double a, double b, double c, double x1, double x2, int nSolves)
 			break;
 
 		default :
+/*
+	Кажется, строчка вышла довольно длинной...)
+ */
 			printf("Unexpected error: nSolves = %d, a = %lg, b = %lg, c = %lg\nReturning with error.\n", nSolves, a, b, c);
 	}
 	return 0;
